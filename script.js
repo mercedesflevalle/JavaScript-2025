@@ -5,35 +5,35 @@ const perros = [
     raza: "Caniche Toy",
     edad: 2,
     precio: 50000,
-    imagen: "https://placedog.net/500/400?id=1"
+    imagen: "./assets/canicheToy.png"
   },
   {
     id: 2,
     raza: "Golden Retriever",
     edad: 1,
     precio: 100000,
-    imagen: "https://placedog.net/500/400?id=2"
+    imagen: "./assets/goldenRetriever.jpeg"
   },
   {
     id: 3,
     raza: "Jack Russel",
     edad: 1.5,
     precio: 80000,
-    imagen: "https://placedog.net/500/400?id=3"
+    imagen: "./assets/jackRussel.jpg"
   },
   {
     id: 4,
     raza: "Bulldog",
     edad: 4,
     precio: 90000,
-    imagen: "https://placedog.net/500/400?id=4"
+    imagen: "./assets/bullDog.jpg"
   },
   {
     id: 5,
     raza: "Husky Siberiano",
     edad: 2,
     precio: 30000,
-    imagen: "https://placedog.net/500/400?id=5"
+    imagen: "./assets/huskySiberiano.jpg"
   }
 ];
 
