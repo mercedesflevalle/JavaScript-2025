@@ -1,68 +1,140 @@
-const IVA = 0.21;
-const destinos = [
-  { codigo: "A1", nombre: "Buenos Aires", precioPorDia: 15000 },
-  { codigo: "B2", nombre: "Madrid", precioPorDia: 30000 },
-  { codigo: "C3", nombre: "Tokio", precioPorDia: 55000 },
-  { codigo: "D4", nombre: "Nueva York", precioPorDia: 40000 },
+// Array con los perros
+const perros = [
+  {
+    id: 1,
+    raza: "Caniche Toy",
+    edad: 2,
+    precio: 50000,
+    imagen: "https://placedog.net/500/400?id=1"
+  },
+  {
+    id: 2,
+    raza: "Golden Retriever",
+    edad: 1,
+    precio: 100000,
+    imagen: "https://placedog.net/500/400?id=2"
+  },
+  {
+    id: 3,
+    raza: "Jack Russel",
+    edad: 1.5,
+    precio: 80000,
+    imagen: "https://placedog.net/500/400?id=3"
+  },
+  {
+    id: 4,
+    raza: "Bulldog",
+    edad: 4,
+    precio: 90000,
+    imagen: "https://placedog.net/500/400?id=4"
+  },
+  {
+    id: 5,
+    raza: "Husky Siberiano",
+    edad: 2,
+    precio: 30000,
+    imagen: "https://placedog.net/500/400?id=5"
+  }
 ];
 
-function pedirDestino() {
-  let menu = "Elegi un destino para viajar:\n";
-  for (let i = 0; i < destinos.length; i++) {
-    menu += `${destinos[i].codigo}) ${destinos[i].nombre} - $${destinos[i].precioPorDia} por día\n`;
-  }
-  console.log(menu);
-  let codigoElegido = prompt(
-    "Ingresá el código del destino que querés elegir:"
-  );
-  let destinoSeleccionado = null;
-  for (let i = 0; i < destinos.length; i++) {
-    if (codigoElegido.toUpperCase() === destinos[i].codigo) {
-      destinoSeleccionado = destinos[i];
-      break;
-    }
-  }
-  if (destinoSeleccionado) {
-    alert(
-      `Elegiste ${destinoSeleccionado.nombre}. Precio por día: $${destinoSeleccionado.precioPorDia}`
-    );
+
+const contenedorPerritos = document.getElementById("perros-container");
+const contenedorCarrito = document.getElementById("carrito-lista");
+const totalCarrito = document.getElementById("carrito-total");
+
+
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+// Cards de perritos
+function mostrarPerritos() {
+  contenedorPerritos.innerHTML = "";
+
+  perros.forEach((perro) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    card.innerHTML = `
+      <img src="${perro.imagen}" alt="${perro.raza}">
+      <h3>${perro.raza}</h3>
+      <p>Edad: ${perro.edad} años</p>
+      <p class="precio">Precio: $${perro.precio}</p>
+      <button id="btn-${perro.id}">Agregar al carrito</button>
+    `;
+
+    contenedorPerritos.appendChild(card);
+
+    const boton = document.getElementById(`btn-${perro.id}`);
+    boton.addEventListener("click", () => {
+      agregarAlCarrito(perro);
+    });
+  });
+}
+
+// Agregar un perro al carrito
+function agregarAlCarrito(perro) {
+  const itemExistente = carrito.find((item) => item.id === perro.id);
+
+  if (itemExistente) {
+    itemExistente.cantidad++;
   } else {
-    alert("Codigo no valido. Intenta de nuevo.");
+    carrito.push({
+      ...perro,
+      cantidad: 1
+    });
   }
-  return destinoSeleccionado
+
+  // Guardar carrito en storage
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
+  // Actualizar 
+  renderCarrito();
 }
 
-function pedirDias() {
-  let cantidadDeDias = Number(prompt("¿Cuántos días desea viajar?").trim());
-  while (isNaN(cantidadDeDias) || cantidadDeDias <= 0) {
-    alert("Por favor, ingrese un número válido de días (mayor a 0).");
-    cantidadDeDias = Number(prompt("¿Cuántos días desea viajar?").trim());
-    console.log(`El usuario eligió ${cantidadDeDias} días`);
+function renderCarrito() {
+  contenedorCarrito.innerHTML = "";
+
+  if (carrito.length === 0) {
+    contenedorCarrito.innerHTML = "<p>No agregaste ningún perrito todavía!</p>";
+    totalCarrito.textContent = "Total: $0";
+    return;
   }
-  return cantidadDeDias;
+
+  let total = 0;
+
+  carrito.forEach((item) => {
+    const div = document.createElement("div");
+    div.classList.add("carrito-item");
+
+    div.innerHTML = `
+      <span>${item.raza} (x${item.cantidad})</span>
+      <span>$${item.precio * item.cantidad}</span>
+      <button id="eliminar-${item.id}">X</button>
+    `;
+
+    contenedorCarrito.appendChild(div);
+
+    const botonEliminar = document.getElementById(`eliminar-${item.id}`);
+    botonEliminar.addEventListener("click", () => {
+      eliminarDelCarrito(item.id);
+    });
+
+    total += item.precio * item.cantidad;
+  });
+
+  totalCarrito.textContent = `Total: $${total}`;
 }
 
-function calcularPrecio (destino, dias){
-    const subtotal = destino.precioPorDia * dias; 
-    const impuesto = subtotal * IVA; 
-    const total = subtotal + impuesto; 
-    return {subtotal, impuesto, total};
+// Eliminar un perro del carrito
+function eliminarDelCarrito(id) {
+  const carritoActualizado = carrito.filter((perro) => perro.id !== id);
+
+  carrito.length = 0;
+  carrito.push(...carritoActualizado);
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+
+  renderCarrito();
 }
 
-const destino = pedirDestino ();
-const dias = pedirDias ();
-
-if (destino && dias) {
-  const resultado = calcularPrecio(destino, dias);
-  alert(
-    `Tu viaje a ${destino.nombre} por ${dias} días cuesta:\n` +
-    `Subtotal: $${resultado.subtotal}\n` +
-    `IVA (21%): $${resultado.impuesto}\n` +
-    `Total final: $${resultado.total}`
-  );
-} else {
-  alert("Simulación cancelada o datos inválidos.");
-}
-
-
-
+mostrarPerritos();
+renderCarrito();

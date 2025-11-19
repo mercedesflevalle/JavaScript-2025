@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Primer Pre-Entrega JavaScript</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop de Perritos</title>
+    <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
-</head>
-<body>
-    <header>
-        <h1>Simulador de Viajes</h1>
+  </head>
+  <body>
+    <header class="header">
+      <h1><strong>Shop de Perritos</strong></h1>
+      <p>Elegí tu perrito favorito y agregalo al carrito</p>
     </header>
-    <main>
-        <section>
-            <h2>Descripción del proyecto</h2>
-      <p>
-        Este simulador de viajes permite calcular el costo total de un viaje según el destino seleccionado y la cantidad de días ingresada por el usuario. 
-        A través de una interfaz basada en cuadros de diálogo (<em>prompts</em> y <em>alerts</em>), el usuario puede elegir su destino preferido, 
-        ingresar la duración del viaje y visualizar un resumen detallado del precio final, incluyendo el impuesto (IVA).
-      </p>
-        </section>
+    <main class="layout">
+      <section id="perros-container" class="cards-container"></section>
+
+      <aside class="carrito">
+        <h2>Tu carrito</h2>
+        <div id="carrito-lista"></div>
+        <p id="carrito-total" class="carrito-total">Total: $0</p>
+      </aside>
     </main>
-</body>
+    <footer class="footer">
+    <p>Perritos Shop — Segunda Entrega JS </p>
+  </footer>
+  </body>
 </html>
