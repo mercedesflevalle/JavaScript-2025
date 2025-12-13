@@ -35,7 +35,7 @@ body {
   background: white;
   border-radius: 10px;
   padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -75,7 +75,7 @@ body {
 
 .card button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 /* Carrito */
@@ -84,7 +84,7 @@ body {
   background: rgb(246, 218, 243);
   border-radius: 10px;
   padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 1.5rem;
 }
@@ -129,4 +129,41 @@ body {
   padding: 1rem;
   font-size: 0.8rem;
   color: #666;
+}
+
+.checkout-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.checkout-form h3 {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.checkout-form input {
+  padding: 0.55rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.checkout-form button {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#btn-comprar {
+  background: #3b82f6;
+  color: white;
+}
+
+#btn-vaciar {
+  background: #ff5252;
+  color: white;
 }
